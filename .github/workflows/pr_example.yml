@@ -32,6 +32,7 @@ jobs:
             echo "githubActor: ${{ github.actor }}"
             echo "github.event.issue.user.login: ${{ github.event.issue.user.login }}"
             echo "github.event.pull_request.user.login: ${{ github.event.pull_request.user.login }}"
+            echo "github.event.pusher.name: ${{ github.event.pusher.name }}"
             echo "--"
             echo "githubSHA: ${{ github.sha }} (${GITHUB_SHA::7})"
             echo "--"
