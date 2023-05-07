@@ -27,6 +27,7 @@ jobs:
             prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
             prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
             prLabel: ${{ steps.PR.outputs.pr_labels }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           name: "Set variables for PR #${{ steps.PR.outputs.number }} (${{ steps.PR.outputs.pr_title }})"
           run: |
             echo "githubActor: ${{ github.actor }}"
@@ -48,3 +49,4 @@ jobs:
             echo "prMergedAt: $prMergedAt"
             echo "prClosedAt: $prClosedAt"
             echo "prLabel: $prLabel"
+            echo "prAuthor: $(gh pr view $prNumber --json author --jq '.author.login')"
