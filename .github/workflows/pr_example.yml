@@ -1,12 +1,12 @@
 name: pr_example
 
 on:
-  pull_request:
-    branches: [ main ]
-    types: [ opened, reopened, synchronize ]
+#  pull_request:
+#    branches: [ main ]
+#    types: [ opened, reopened, synchronize ]
   push:
     branches: [main]
-  workflow_dispatch:
+#  workflow_dispatch:
 
 jobs:
   pr_example:
@@ -51,8 +51,5 @@ jobs:
         - name: github.sha
           run: echo "${{ github.sha }}"
 
-        - name: github.event.pull_request.head.sha
-          run: echo "This PR head SHA is ${{ github.event.pull_request.head.sha }}"
-          
-        - name: Get github.event.workflow_run.head_sha
-          run: echo "Workflow head SHA is ${{ github.event.workflow_run.head_sha }}"
+        - name: gihthub short sha
+          run: echo ${GITHUB_SHA::7}
