@@ -12,41 +12,44 @@ jobs:
   pr_example:
     runs-on: ubuntu-latest
     steps:
-        - uses: 8BitJonny/gh-get-current-pr@2.2.0
-          id: PR
-          with:
-            sha: ${{ github.event.pull_request.head.sha }}
+       - name: Checkout
+         uses: actions/checkout@v3
+    
+       - uses: 8BitJonny/gh-get-current-pr@2.2.0
+         id: PR
+         with:
+           sha: ${{ github.event.pull_request.head.sha }}
 
-        - if: steps.PR.outputs.pr_found == 'true'
-          env:
-            prNumber: ${{ steps.PR.outputs.number }}
-            prUrl: ${{ steps.PR.outputs.pr_url }}
-            prTitle: ${{ steps.PR.outputs.pr_title }}
-            prBody: ${{ steps.PR.outputs.pr_body }}
-            prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
-            prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
-            prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
-            prLabel: ${{ steps.PR.outputs.pr_labels }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          name: "Set variables for PR #${{ steps.PR.outputs.number }} (${{ steps.PR.outputs.pr_title }})"
-          run: |
-            echo "githubActor: ${{ github.actor }}"
-            echo "github.event.issue.user.login: ${{ github.event.issue.user.login }}"
-            echo "github.event.pull_request.user.login: ${{ github.event.pull_request.user.login }}"
-            echo "github.event.pusher.name: ${{ github.event.pusher.name }}"
-            echo "github.event.head_commit.author.name: ${{ github.event.head_commit.author.name }}"
-            echo "github.event.pull_request.head.ref: ${{ github.event.pull_request.head.ref }}"
-            echo "github.triggering_actor: ${{ github.triggering_actor }}"
-            echo "github.event.pull_request.base.ref: ${{ github.event.pull_request.base.ref }}"
-            echo "--"
-            echo "githubSHA: ${{ github.sha }} (${GITHUB_SHA::7})"
-            echo "--"
-            echo "prNumber: $prNumber"
-            echo "prUrl: $prUrl"
-            echo "prTitle: $prTitle"
-            echo "prBody: $prBody"
-            echo "prCreatedAt: $prCreatedAt"
-            echo "prMergedAt: $prMergedAt"
-            echo "prClosedAt: $prClosedAt"
-            echo "prLabel: $prLabel"
-            echo "prAuthor: $(gh pr view $prNumber --json author --jq '.author.login')"
+       - if: steps.PR.outputs.pr_found == 'true'
+         env:
+          prNumber: ${{ steps.PR.outputs.number }}
+          prUrl: ${{ steps.PR.outputs.pr_url }}
+          prTitle: ${{ steps.PR.outputs.pr_title }}
+          prBody: ${{ steps.PR.outputs.pr_body }}
+          prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
+          prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
+          prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
+          prLabel: ${{ steps.PR.outputs.pr_labels }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         name: "Set variables for PR #${{ steps.PR.outputs.number }} (${{ steps.PR.outputs.pr_title }})"
+         run: |
+          echo "githubActor: ${{ github.actor }}"
+          echo "github.event.issue.user.login: ${{ github.event.issue.user.login }}"
+          echo "github.event.pull_request.user.login: ${{ github.event.pull_request.user.login }}"
+          echo "github.event.pusher.name: ${{ github.event.pusher.name }}"
+          echo "github.event.head_commit.author.name: ${{ github.event.head_commit.author.name }}"
+          echo "github.event.pull_request.head.ref: ${{ github.event.pull_request.head.ref }}"
+          echo "github.triggering_actor: ${{ github.triggering_actor }}"
+          echo "github.event.pull_request.base.ref: ${{ github.event.pull_request.base.ref }}"
+          echo "--"
+          echo "githubSHA: ${{ github.sha }} (${GITHUB_SHA::7})"
+          echo "--"
+          echo "prNumber: $prNumber"
+          echo "prUrl: $prUrl"
+          echo "prTitle: $prTitle"
+          echo "prBody: $prBody"
+          echo "prCreatedAt: $prCreatedAt"
+          echo "prMergedAt: $prMergedAt"
+          echo "prClosedAt: $prClosedAt"
+          echo "prLabel: $prLabel"
+          echo "prAuthor: $(gh pr view $prNumber --json author --jq '.author.login')"
