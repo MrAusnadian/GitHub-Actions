@@ -48,10 +48,6 @@ jobs:
         - name: View PR author
           run: echo "This PR is opened by ${{ github.event.pull_request.user.login }} ."
           
-        - name: Get Hash
-          id: hash
-          run: echo "git_hash=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_HASH
-
         - name: Check Hash
           run: echo "${{ env.hash }}"
 
