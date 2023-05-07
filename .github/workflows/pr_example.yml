@@ -1,0 +1,48 @@
+name: pr_example
+
+on:
+  pull_request:
+    branches: [ main ]
+    types: [ opened, reopened, synchronize ]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  pr_example:
+    runs-on: ubuntu-latest
+    steps:
+        - uses: 8BitJonny/gh-get-current-pr@2.2.0
+          id: PR
+          with:
+            sha: ${{ github.event.pull_request.head.sha }}
+          
+        - if: steps.PR.outputs.pr_found == 'true'
+          env:
+            prNumber: ${{ steps.PR.outputs.number }}
+            prUrl: ${{ steps.PR.outputs.pr_url }}
+            prTitle: ${{ steps.PR.outputs.pr_title }}
+            prBody: ${{ steps.PR.outputs.pr_body }}
+            prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
+            prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
+            prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
+            prLabel: ${{ steps.PR.outputs.pr_labels }}
+          name: "PR ${prNumber} ${prTitle} at ${prUrl} is ${prJSON}"
+          run: |
+            echo "prJSON: $prJSON"
+            echo "--"
+            echo "prNumber: $prNumber"
+            echo "--"
+            echo "prUrl: $prUrl"
+            echo "--"
+            echo "prTitle: $prTitle"
+            echo "--"
+            echo "prBody: $prBody"
+            echo "--"
+            echo "prCreatedAt: $prCreatedAt"
+            echo "--"
+            echo "prMergedAt: $prMergedAt"
+            echo "--"
+            echo "prClosedAt: $prClosedAt"
+            echo "--"
+            echo "prLabel: $prLabel"
