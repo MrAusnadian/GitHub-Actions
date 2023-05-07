@@ -16,7 +16,7 @@ jobs:
           id: PR
           with:
             sha: ${{ github.event.pull_request.head.sha }}
-          
+
         - if: steps.PR.outputs.pr_found == 'true'
           env:
             prNumber: ${{ steps.PR.outputs.number }}
@@ -46,3 +46,6 @@ jobs:
             echo "prClosedAt: $prClosedAt"
             echo "--"
             echo "prLabel: $prLabel"
+
+        - name: View PR author
+          run: echo "This PR is opened by ${{ github.event.pull_request.user.login }} ."
