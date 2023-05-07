@@ -29,18 +29,12 @@ jobs:
           prCreatedAt: ${{ steps.PR.outputs.pr_created_at }}
           prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
           prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
-          prLabel: ${{ steps.PR.outputs.pr_labels }}
+          prLabels: ${{ steps.PR.outputs.pr_labels }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
          name: "Set variables for PR #${{ steps.PR.outputs.number }} (${{ steps.PR.outputs.pr_title }})"
          run: |
-          echo "githubActor: ${{ github.actor }}"
-          echo "github.event.issue.user.login: ${{ github.event.issue.user.login }}"
-          echo "github.event.pull_request.user.login: ${{ github.event.pull_request.user.login }}"
-          echo "github.event.pusher.name: ${{ github.event.pusher.name }}"
-          echo "github.event.head_commit.author.name: ${{ github.event.head_commit.author.name }}"
-          echo "github.event.pull_request.head.ref: ${{ github.event.pull_request.head.ref }}"
-          echo "github.triggering_actor: ${{ github.triggering_actor }}"
-          echo "github.event.pull_request.base.ref: ${{ github.event.pull_request.base.ref }}"
+          echo "Merged by: ${{ github.actor }} (${{ github.event.head_commit.author.name }})"
+          echo "Created by: $(gh pr view $prNumber --json author --jq '.author.login')"
           echo "--"
           echo "githubSHA: ${{ github.sha }} (${GITHUB_SHA::7})"
           echo "--"
@@ -51,5 +45,4 @@ jobs:
           echo "prCreatedAt: $prCreatedAt"
           echo "prMergedAt: $prMergedAt"
           echo "prClosedAt: $prClosedAt"
-          echo "prLabel: $prLabel"
-          echo "prAuthor: $(gh pr view $prNumber --json author --jq '.author.login')"
+          echo "prLabels: $prLabels"
