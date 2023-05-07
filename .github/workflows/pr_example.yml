@@ -16,7 +16,7 @@ jobs:
           id: PR
           with:
             sha: ${{ github.event.pull_request.head.sha }}
-          
+
         - if: steps.PR.outputs.pr_found == 'true'
           env:
             prNumber: ${{ steps.PR.outputs.number }}
@@ -27,10 +27,8 @@ jobs:
             prMergedAt: ${{ steps.PR.outputs.pr_merged_at }}
             prClosedAt: ${{ steps.PR.outputs.pr_closed_at }}
             prLabel: ${{ steps.PR.outputs.pr_labels }}
-          name: "PR ${prNumber} ${prTitle} at ${prUrl} is ${prJSON}"
+          name: "Set variables for PR #${{ steps.PR.outputs.number }} (${{ steps.PR.outputs.pr_title }})"
           run: |
-            echo "prJSON: $prJSON"
-            echo "--"
             echo "prNumber: $prNumber"
             echo "--"
             echo "prUrl: $prUrl"
@@ -46,3 +44,13 @@ jobs:
             echo "prClosedAt: $prClosedAt"
             echo "--"
             echo "prLabel: $prLabel"
+
+        - name: View PR author
+          run: echo "This PR is opened by ${{ github.event.pull_request.user.login }} ."
+          
+        - name: Check Hash
+          run: echo "${{ env.hash }}"
+
+        - name: View Head SHA
+          run: echo "This PR head SHA is ${{ github.event.pull_request.head.sha }} ."
+          
