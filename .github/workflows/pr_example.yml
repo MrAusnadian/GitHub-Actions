@@ -30,6 +30,8 @@ jobs:
           name: "Set variables for PR #${{ steps.PR.outputs.number }} (${{ steps.PR.outputs.pr_title }})"
           run: |
             echo "githubActor: ${{ github.actor }}"
+            echo "github.event.issue.user.login: ${{ github.event.issue.user.login }}"
+            echo "github.event.pull_request.user.login: ${{ github.event.pull_request.user.login }}"
             echo "--"
             echo "githubSHA: ${{ github.sha }} (${GITHUB_SHA::7})"
             echo "--"
