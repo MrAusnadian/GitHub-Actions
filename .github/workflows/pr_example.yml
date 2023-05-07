@@ -4,9 +4,6 @@ on:
   pull_request:
     branches: [ main ]
     types: [ opened, reopened, synchronize ]
-    paths:
-      - '**.php'
-      - '**.phtml'
   push:
     branches: [main]
   workflow_dispatch:
